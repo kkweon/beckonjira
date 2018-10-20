@@ -1,0 +1,2 @@
+# beckonjira
+Beckon Jira CLI
