@@ -5,13 +5,14 @@ import boto3
 import requests
 
 from .models import JiraIssueTypeFactory, JiraTicket
-from .text import build_browse_url, build_url
+from .text import build_browse_url, build_rest_url
 
 s3 = boto3.client("s3")
 
 
 def get_jira_auth() -> Tuple[str, str]:
-    """
+    """Get Jira Credential, (username, token)
+
     >>> get_jira_auth()
     ('beckonbot', '...')
     """
@@ -25,7 +26,7 @@ def get_jira_auth() -> Tuple[str, str]:
 
 
 def get_ticket_info(name: str) -> JiraTicket:
-    """
+    """Given a ticket name `name`, get jira ticket
     >>> ticket_info = get_ticket_info("BASE-12345")
     >>> ticket_info
     JiraTicket(name='BASE-12345',
@@ -33,7 +34,7 @@ def get_ticket_info(name: str) -> JiraTicket:
                summary='CB3: Spider and polar charts has label that is obstructed and punch to edit showing',
                url='https://beckon.atlassian.net/browse/BASE-12345')
     """
-    ticket_url = build_url(name)
+    ticket_url = build_rest_url(name)
     res = requests.get(ticket_url, auth=get_jira_auth()).json()
     issue_type = JiraIssueTypeFactory(**res["fields"]["issuetype"])
     summary = res["fields"]["summary"]

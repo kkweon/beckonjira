@@ -22,7 +22,7 @@ class Format(Command):
 
 setup(
     name="beckonjira",
-    version="1.0.0",
+    version="1.0.1",
     description="Beckon Jira Helper",
     author="Mo Kweon",
     author_email="Kyung.Kweon@beckon.com",
@@ -31,7 +31,7 @@ setup(
     packages=find_packages("src", exclude="beckonjira.egg-info"),
     setup_requires=["pytest-runner", "pytest-pylint", "pytest-black", "pytest-mypy"],
     cmdclass={"format": Format},
-    tests_require=["pytest", "pylint", "black", "mypy"],
+    tests_require=["pytest", "pytest-cov", "pylint", "black", "mypy"],
     install_requires=["boto3", "requests"],
     license="MIT",
     entry_points={"console_scripts": ["beckon-jira = beckonjira.__init__:main"]},
